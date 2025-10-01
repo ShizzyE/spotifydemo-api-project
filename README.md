@@ -1,1 +1,1 @@
-# spotify-api-project
+# Spotify Demo Project
