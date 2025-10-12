@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 const routers = require('./routes/index.js')
 
 app.use('/users', routers.user);
-app.use('/favorites', routers.favorite)
+// app.use('/favorites', routers.favorite)
 
 
 // Set app port Connection

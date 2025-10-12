@@ -8,4 +8,6 @@ const router = new express.Router();
 router.get('/', userController.index)
 router.post('/', userController.create);
 router.patch('/:id', userController.update);
-router.delete('/:id', userController);
+router.delete('/:id', userController.remove);
+
+module.exports = router;

@@ -1,0 +1,12 @@
+{
+  "name": "spotifydemo-api-project",
+  "version": "1.0.0",
+  "description": "This spotify demo will allow you to search, favorite, and view all songs, artists, and albums provided by the spotify API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
