@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // define association here
-      // User.hasMany =
+      models.User.hasMany(models.FavoriteTrack)
       // hasMany
     }
   }
@@ -14,17 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       username: { 
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true, // Optional for spotify users
         unique: {
           msg: "Username already taken."
         }
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true // Optional for spotify users
       },
-      
-      
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: "Email is required" },
           isEmail: { msg: "Must be a valid email address" }
         }
+      },
+      spotifyId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: true,
       },
     },
     {
