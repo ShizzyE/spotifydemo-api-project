@@ -4,10 +4,20 @@
   "description": "This spotify demo will allow you to search, favorite, and view all songs, artists, and albums provided by the spotify API.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd server && npm install && npm run dev"
+    "start": "cd server && npm start",
+    "heroku-prebuild": "npm run server:install && npm run client:install",
+    "client:install": "cd client && npm install",
+    "server:install": "cd server && npm install",
+    "client:build": "cd client && npm run build",
+    "server:build": "cd server && npm run build",
+    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
+    "client:dev": "cd client && npm run dev",
+    "server:dev": "cd server && npm run dev"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }
