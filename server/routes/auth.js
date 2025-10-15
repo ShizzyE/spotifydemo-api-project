@@ -25,7 +25,7 @@ router.get(
     });
 
     // Send token to frontend (redirect with token or send JSON response)
-    res.redirect(`http://localhost:3000/oauth-success?token=${token}`);
+    res.redirect(`http://localhost:5173/oauth-success?token=${token}`);
     // res.json({ token }); // Optional
   }
 );
