@@ -26,9 +26,6 @@ app.use('/favorite_tracks', routers.favorite_track);
 // app.use('/favorites', routers.favorite)
 
 
-// Set app port Connection
-const PORT = 3001;
-
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 3001, () => {
     console.log(`Server is running on port ${PORT}`)
 });
