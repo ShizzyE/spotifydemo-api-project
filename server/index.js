@@ -25,6 +25,9 @@ app.use('/users', routers.user);
 app.use('/favorite_tracks', routers.favorite_track);
 // app.use('/favorites', routers.favorite)
 
+app.get('/', (req, res) => {
+    res.send('API is running...')
+});
 
 app.listen(process.env.PORT || 3001, () => {
     console.log(`Server is running on port ${process.env.PORT}`)
