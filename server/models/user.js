@@ -1,65 +1,27 @@
-"use strict";
-const { Model } = require("sequelize");
-const bcrypt = require("bcrypt");
-
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
       // define association here
-      models.User.hasMany(models.FavoriteTrack)
-      // hasMany
     }
   }
-  User.init(
-    {
-      username: { 
-        type: DataTypes.STRING,
-        allowNull: true, // Optional for spotify users
-        unique: {
-          msg: "Username already taken."
-        }
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: true // Optional for spotify users
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: {
-          msg: "Email already in use."
-        },
-        validate: {
-          notNull: { msg: "Email is required" },
-          isEmail: { msg: "Must be a valid email address" }
-        }
-      },
-      spotifyId: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        unique: true,
-      },
-    },
-    {
-      sequelize,
-      modelName: "User",
-      hooks: {
-        beforeCreate: async (user, options) => {
-          if(user.password){
-            // bcrypt hash password
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
-          }
-        },
-        beforeUpdate: async (user, options) => {
-          if(user.changed("password")){
-            // bcrypt hash password
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
-          }
-        },
-      }
-    }
-  );
+  User.init({
+    spotifyId: DataTypes.STRING,
+    email: DataTypes.STRING,
+    accessToken: DataTypes.STRING,
+    refreshToken: DataTypes.STRING,
+    expiresIn: DataTypes.INTEGER
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
   return User;
 };

@@ -1,39 +1,26 @@
-// Load in express
-require("dotenv").config();
-require("./config/passport");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
 
-const express = require("express");
-const passport = require("passport");
+const authRoutes = require('./routes/auth');
 
-// Create new express instance called app
 const app = express();
+const port = process.env.PORT || 3002;
 
-// Other middleware
-const cors = require("cors");
-const bodyParser = require("body-parser");
-
-// Connecting to front end + other
-const path = require("path");
-const axios = require("axios");
-
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+// APP.USE 
 app.use(cors());
-app.use(passport.initialize());
+app.use(express.json());
 
 // Routes
-const routers = require("./routes/index.js");
-const authRoutes = require("./routes/auth.js");
+app.use('/auth', authRoutes)
 
-app.use("/auth", authRoutes);
-app.use("/users", routers.user);
-app.use("/favorite_tracks", routers.favorite_track);
-// app.use('/favorites', routers.favorite)
-
-app.get("/", (req, res) => {
-  res.send("API is running...");
+app.get('/', (req, res) => {
+  res.send({
+    message: 'Server is running',
+    welcome: 'Hello from the server!'
+  });
 });
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${port}`);
 });

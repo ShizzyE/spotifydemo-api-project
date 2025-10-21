@@ -9,14 +9,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
-        type: Sequelize.STRING
-      },
-      password: {
+      spotifyId: {
         type: Sequelize.STRING
       },
       email: {
         type: Sequelize.STRING
+      },
+      accessToken: {
+        type: Sequelize.STRING
+      },
+      refreshToken: {
+        type: Sequelize.STRING
+      },
+      expiresIn: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
