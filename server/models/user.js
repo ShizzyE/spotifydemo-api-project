@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       email: DataTypes.STRING,
-      accessToken: DataTypes.STRING,
-      refreshToken: DataTypes.STRING,
+      accessToken: DataTypes.TEXT,
+      refreshToken: DataTypes.TEXT,
       expiresIn: DataTypes.INTEGER,
     },
     {

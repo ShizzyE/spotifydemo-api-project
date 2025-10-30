@@ -18,8 +18,15 @@ const FRONTEND_URI = "http://localhost:5173";
 
 // Redirect user to spotify's authorization page
 router.get("/login", (req, res) => {
-  
-  const scope = "user-read-email";
+  const scope = [
+    "user-read-email",
+    "user-read-private",
+    "playlist-read-private",
+    "playlist-read-collaborative",
+    "user-top-read",
+    "user-read-recently-played",
+    "user-library-read",
+  ].join(" ");
   // Query string parameters for spotify auth
   const queryParams = new URLSearchParams({
     response_type: "code",

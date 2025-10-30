@@ -3,7 +3,8 @@ const express = require("express");
 const cors = require("cors");
 
 const authRoutes = require("./routes/auth");
-const spotifyRoutes = require("./routes/spotifyRoutes")
+const spotifyRoutes = require("./routes/spotifyRoutes");
+const homepageRoutes = require("./routes/homepage");
 
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(express.json());
 // Routes
 app.use("/auth", authRoutes);
 app.use("/spotify", spotifyRoutes);
+
 
 app.get("/", (req, res) => {
   res.send({
