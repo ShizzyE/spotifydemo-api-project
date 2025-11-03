@@ -6,10 +6,11 @@ require("dotenv").config();
 
 const router = express.Router();
 
-router.get("/search", async (req, res) => {
-  const { spotifyId, query, type } = req.query;
+router.get("/search", requireAuth, async (req, res) => {
+  const { query, type } = req.query;
+  const spotifyId = req.user.spotifyId; // JWT
+
   try {
-    // Make sure user has an access token
     const user = await User.findOne({ where: { spotifyId } });
     if (!user || !user.accessToken) {
       return res
@@ -17,24 +18,14 @@ router.get("/search", async (req, res) => {
         .json({ message: "Access not available, must login" });
     }
 
-    // Make req to spotify API
     const spotifyRes = await axios.get("https://api.spotify.com/v1/search", {
-      params: {
-        q: query,
-        type: type,
-        limit: 10,
-      },
-      headers: {
-        Authorization: `Bearer ${user.accessToken}`,
-      },
+      params: { q: query, type, limit: 10 },
+      headers: { Authorization: `Bearer ${user.accessToken}` },
     });
 
-    // Return Data
-
-    const results = spotifyRes.data;
-
-    res.json(results);
+    res.json(spotifyRes.data);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Could not fetch search results" });
   }
 });
@@ -59,12 +50,15 @@ router.get("/home", requireAuth, async (req, res) => {
         return response.data;
       } catch (err) {
         if (err.response?.status === 404) return null; // Handle 404s gracefully
-        console.error(`Error fetching ${url}:`, err.response?.data || err.message);
+        console.error(
+          `Error fetching ${url}:`,
+          err.response?.data || err.message
+        );
         return null;
       }
     };
 
-   // Step 1: Fetch the top US playlists from the "toplists" category
+    // Step 1: Fetch the top US playlists from the "toplists" category
     const topLists = await safeFetch(
       "https://api.spotify.com/v1/browse/categories/toplists/playlists?country=US&limit=1"
     );
@@ -109,7 +103,10 @@ router.get("/home", requireAuth, async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Homepage fetch error:", error.response?.data || error.message);
+    console.error(
+      "Homepage fetch error:",
+      error.response?.data || error.message
+    );
     res.status(500).json({ message: "Could not fetch homepage data" });
   }
 });

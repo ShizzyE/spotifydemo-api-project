@@ -1,28 +1,34 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom"
-import Logo from "../assets/spotify-logo.png";
-
+import { Link, useLocation } from "react-router-dom";
+import { logout } from "../utils/logout";
 
 export default function Header() {
+  const location = useLocation();
 
-    return (
-        <header className="w-full bg-green-500 sticky top-0 z-40 p-1">
-            <nav className="flex flex-row justify-between items-center">
-               <div>
-                 <img src={Logo} alt="spotify logo" className="mx-auto mb-4 max-w-10 -rotate-20" />
-                </div> 
+  const isActive = (path) =>
+    location.pathname === path
+      ? "text-white underline"
+      : "hover:text-black text-white";
 
-                <div>
-                    <input type="text" placeholder="test" 
-                    className="text-center"/>
-                </div>
+  return (
+    <nav className="flex flex-col sm:flex-row justify-between items-center bg-[#1DB954] px-6 sm:px-10 py-4 gap-3 sm:gap-0">
+      <div className="flex gap-6 sm:gap-8 text-base sm:text-lg font-semibold">
+        <Link to="/search" className={isActive("/search")}>
+          Search
+        </Link>
+        <Link to="/home" className={isActive("/home")}>
+          Home
+        </Link>
+        <Link to="/favorites" className={isActive("/favorites")}>
+          Favorites
+        </Link>
+      </div>
 
-                <ul className="flex">
-                   <li><Link to="/home">Home</Link></li>
-                   <li><Link to="/search">Search</Link></li> 
-                   <li><Link to="/favorites">Favorites</Link></li>  
-                </ul>
-            </nav>
-        </header>
-    )
-};
+      <button
+        onClick={logout}
+        className="bg-red-600 text-white font-semibold px-4 py-2 rounded-full hover:bg-red-700 text-sm sm:text-base transition-colors"
+      >
+        Logout
+      </button>
+    </nav>
+  );
+}

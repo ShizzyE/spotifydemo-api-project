@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/auth");
 const spotifyRoutes = require("./routes/spotifyRoutes");
-const homepageRoutes = require("./routes/homepage");
+
 
 
 const app = express();
